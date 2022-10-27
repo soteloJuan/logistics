@@ -2,6 +2,22 @@ const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 
+const { errorHandler } = require('./common/customError/errorHandler');
+
+// Database
+const databaseConexion = require('./database/config');
+
+//models
+require('./model/Users.Model');
+require('./model/Destination.Model');
+require('./model/Origins.Model');
+require('./model/StandarSize.Model');
+require('./model/StatusOrder.Model');
+require('./model/Order.Model');
+require('./model/ProductOrder.Model');
+
+
+const Routes = require('./routes');
 class App{
 
     port;
@@ -22,16 +38,18 @@ class App{
     }
     
     routes(){
-        this.app.use('/api', (req, res) => {
-            res.status(200).json({
-                ok: true,
-                message: 'Hello World'
-            });
-        });
+        this.app.use('/api',Routes);
+        this.app.use(errorHandler);
+
     }
 
-    initDatabase(){
-
+    async initDatabase(){
+        try{
+            // await databaseConexion.authenticate();
+            await databaseConexion.sync({force: false});
+        }catch(error){
+            throw new Error('Error on Databse Conexion');
+        }
     }
 
     init(){
