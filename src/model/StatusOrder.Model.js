@@ -10,7 +10,7 @@ const StatusOrders = sequelize.define('statusOrders', {
         primaryKey: true,
     },
     name:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.STRING,
         allowNull:false
     }
 },{

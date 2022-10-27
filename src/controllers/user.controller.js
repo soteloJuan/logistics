@@ -1,23 +1,78 @@
+const UseCasesCreate = require('../useCases/User/Create');
+const UseCasesLogin = require('../useCases/User/Login');
+const UseCasesGetAll = require('../useCases/User/GetAll');
+const UseCasesDelete = require('../useCases/User/Delete');
 
-const create = async(req, res, next) => {
 
+const create = (req, res, next) => {
 
-    res.status(200).json({
-        ok: true,
-        message: "Test Route Create User",
-        data: result.data
+    const { name, lastname, email, password, phone } = req.body;
+
+    const useCasesCreate = UseCasesCreate();
+    useCasesCreate.Execute(name, lastname, email, password, phone ).then( (result) => {
+
+        res.status(200).json({
+            ok: true,
+            message: result.message,
+            data: result.data
+        });
+    }, (err) => {
+        console.log('error : ', err);
+        next(err)
     });
 }
 
-const login = async(req, res, next) => {
+const login = (req, res, next) => {
+    const {email, password } = req.body;
+    const useCasesLogin = UseCasesLogin();
 
-    res.status(200).json({
-        ok: true,
-        message: "Test Route Login",
+    useCasesLogin.Execute(email, password).then( (result) => {
+        res.status(200).json({
+                ok: true,
+                message: result.message,
+                data: result.data,
+                token: result.token
+        });
+    }, (err) => {
+        next(err)
+    });
+}
+
+const getAll = (req, res, next) => {
+    const useCasesGetAll = UseCasesGetAll();
+
+    useCasesGetAll.Execute().then( (result) => {
+        res.status(200).json({
+                ok: true,
+                message: result.message,
+                data: result.data,
+        });
+    }, (err) => {
+        next(err)
+    });
+}
+
+
+const deleteUser = (req, res, next) => {
+    const useCasesDelete = UseCasesDelete();
+
+    const { idUser } = req.params;
+    const { active } = req.body
+
+    useCasesDelete.Execute(idUser, active).then( (result) => {
+        res.status(200).json({
+                ok: true,
+                message: result.message,
+                data: result.data,
+        });
+    }, (err) => {
+        next(err)
     });
 }
 
 module.exports = {
     create,
-    login
+    login,
+    getAll,
+    deleteUser
 }

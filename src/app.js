@@ -2,6 +2,8 @@ const cors = require('cors');
 const express = require('express');
 const morgan = require('morgan');
 
+const { errorHandler } = require('./common/customError/errorHandler');
+
 // Database
 const databaseConexion = require('./database/config');
 
@@ -37,11 +39,17 @@ class App{
     
     routes(){
         this.app.use('/api',Routes);
+        this.app.use(errorHandler);
+
     }
 
     async initDatabase(){
-        // await databaseConexion.authenticate();
-        await databaseConexion.sync({force: false});
+        try{
+            // await databaseConexion.authenticate();
+            await databaseConexion.sync({force: false});
+        }catch(error){
+            throw new Error('Error on Databse Conexion');
+        }
     }
 
     init(){
