@@ -52,6 +52,7 @@ CREATE TABLE orders(
     idDestination VARCHAR(50) NOT NULL,
     idStatusOrder VARCHAR(50) NOT NULL,
     idStandarSize VARCHAR(50) NOT NULL,
+    totalWeight FLOAT NOT NULL,
     totalPrice FLOAT NOT NULL,
     totalProduct INT NOT NULL,
     createDate DATETIME NOT NULL,
@@ -69,5 +70,5 @@ CREATE TABLE productOrders(
     description VARCHAR(50) NOT NULL,
     weight FLOAT NOT NULL,
     
-    CONSTRAINT fk_productOrders_orders_idOrder FOREIGN KEY (idOrder) REFERENCES productOrders(idProductOrder)
+    CONSTRAINT fk_productOrders_orders_idOrder FOREIGN KEY (idOrder) REFERENCES orders(idOrder)
 );

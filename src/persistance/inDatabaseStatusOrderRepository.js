@@ -12,6 +12,16 @@ class StatusOrdersRepository{
         return result;
     }
 
+    async getByName(name){
+        const result = await StatusOrders.findOne({
+            where:{
+                name
+            }
+        });
+        return result;
+    }
+
+
     async getAllIdStatusOrders(){
         const result = await StatusOrders.findAll();
         return result;
