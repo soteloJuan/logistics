@@ -17,7 +17,6 @@ const create = (req, res, next) => {
             data: result.data
         });
     }, (err) => {
-        console.log('error : ', err);
         next(err)
     });
 }

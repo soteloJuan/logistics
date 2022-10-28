@@ -5,8 +5,8 @@ const ValidationJWT = require('../common/middlewares/validationJWT');
 const router = Router();
 const validationJwt = ValidationJWT();
 
-router.post('/createStandarSize', create); // ACCESS ONLY ADMIN
-router.get('/getAllStandarSize', getAll);
+router.post('/createStandarSize', validationJwt.validationJWTAdmin, create);
+router.get('/getAllStandarSize', validationJwt.validationJWTAdmin, getAll);
 
 
 

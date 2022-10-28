@@ -5,10 +5,10 @@ const ValidationJWT = require('../common/middlewares/validationJWT');
 const router = Router();
 const validationJwt = ValidationJWT();
 
-router.post('/createUser', create); // ACCESS ONLY ADMIN
+router.post('/createUser', validationJwt.validationJWTAdmin, create);
 router.get('/loginUser', login);
-router.get('/getAllUser', getAll); // ACCESS ONLY ADMIN
-router.delete('/deleteUser/:idUser',  deleteUser); // ACCESS ONLY ADMIN
+router.get('/getAllUser', validationJwt.validationJWTAdmin, getAll);
+router.delete('/deleteUser/:idUser', validationJwt.validationJWTAdmin, deleteUser); 
 
 
 
