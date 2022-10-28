@@ -10,6 +10,10 @@ const Orders = sequelize.define('orders', {
         allowNull: false,
         primaryKey: true,
     },
+    totalWeight:{
+        type: DataTypes.FLOAT,
+        allowNull:false
+    },
     totalProduct:{
         type: DataTypes.INTEGER,
         allowNull:false
@@ -18,8 +22,12 @@ const Orders = sequelize.define('orders', {
         type: DataTypes.FLOAT,
         allowNull:false
     },
+    createDate:{
+        type: DataTypes.DATE,
+        allowNull:false
+    }
 },{
-timestamps: 'createDate'
+    timestamps: false
 });
 
 Orders.hasMany(ProductOrders, {

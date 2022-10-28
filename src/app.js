@@ -45,7 +45,6 @@ class App{
 
     async initDatabase(){
         try{
-            // await databaseConexion.authenticate();
             await databaseConexion.sync({force: false});
         }catch(error){
             throw new Error('Error on Databse Conexion');
